@@ -21,6 +21,7 @@ async function signup(email, password, fullName) {
         console.log(err);
         error.value = err.message;
     } finally {
+        error.value = null;
         isPending.value = false;
     }
 }
