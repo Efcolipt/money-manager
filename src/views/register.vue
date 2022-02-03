@@ -14,6 +14,7 @@
                             type="text"
                             placeholder="Ivan"
                             class="px-4 py-3 rounded-lg border-gray-100 mt-1 border"
+                            v-model="fullName"
                         />
                     </label>
                 </div>
@@ -25,6 +26,7 @@
                             type="email"
                             placeholder="example@example.ru"
                             class="px-4 py-3 rounded-lg border-gray-100 mt-1 border"
+                            v-model="email"
                         />
                     </label>
                 </div>
@@ -35,6 +37,7 @@
                             id="password"
                             type="password"
                             class="px-4 py-3 rounded-lg border-gray-100 mt-1 border"
+                            v-model="password"
                         />
                     </label>
                 </div>
@@ -63,12 +66,28 @@
 </template>
 
 <script>
+import { useSignUp } from "@/composables/useSignUp";
+import { ref } from "vue";
+
 export default {
     setup() {
-        function onSubmit() {}
+        const { error, isPending, signup } = useSignUp();
+
+        const fullName = ref("");
+        const email = ref("");
+        const password = ref("");
+
+        async function onSubmit() {
+            await signup(email.value, password.value);
+        }
 
         return {
             onSubmit,
+            password,
+            email,
+            fullName,
+            error,
+            isPending,
         };
     },
 };
