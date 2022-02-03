@@ -43,13 +43,27 @@
                 </div>
                 <div class="row">
                     <button
+                        v-if="!isPending"
                         type="submit"
                         class="text-center py-3 w-full bg-primary text-white font-bold rounded-lg"
                     >
                         Sign Up
                     </button>
+                    <button
+                        v-else
+                        type="button"
+                        class="text-center py-3 w-full bg-gray-800 text-white font-bold rounded-lg cursor-not-allowed"
+                        disabled
+                    >
+                        Loading...
+                    </button>
                 </div>
             </form>
+
+            <!-- : Error -->
+            <div v-if="error" class="text-left mt-4 text-red">
+                <span>{{ error }}</span>
+            </div>
 
             <!-- : DIRECTION -->
             <div class="w-full text-center mt-6">
@@ -78,7 +92,7 @@ export default {
         const password = ref("");
 
         async function onSubmit() {
-            await signup(email.value, password.value);
+            await signup(email.value, password.value, fullName.value);
         }
 
         return {
