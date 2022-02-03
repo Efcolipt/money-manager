@@ -4,17 +4,14 @@ import { ref } from "vue";
 const error = ref(null);
 const isPending = ref(null);
 
-async function signup(email, password, fullName) {
+async function signin(email, password) {
     isPending.value = true;
     error.value = null;
     try {
-        const res = await projectAuth.createUserWithEmailAndPassword(
+        const res = await projectAuth.signInWithEmailAndPassword(
             email,
             password
         );
-        if (!res) throw new Error("Could not create a new user.");
-
-        await res.user.updateProfile({ displayName: fullName });
 
         return res;
     } catch (err) {
@@ -25,6 +22,6 @@ async function signup(email, password, fullName) {
     }
 }
 
-export function useSignUp() {
-    return { error, isPending, signup };
+export function useSignIn() {
+    return { error, isPending, signin };
 }
