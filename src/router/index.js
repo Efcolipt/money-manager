@@ -22,9 +22,6 @@ const routes = [
     {
         path: "/",
         name: "Home",
-        meta: {
-            layout: AUTH_LAYOUT,
-        },
         component: () =>
             import(/* webpackChunkName: "Home" */ "@/views/index.vue"),
     },

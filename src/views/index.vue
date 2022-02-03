@@ -1,11 +1,21 @@
 <template>
-    <div>
-        <i class="t2ico t2ico-wallet"></i>
+    <div class="home">sheesh</div>
+    <div class="mt-6" v-if="user">
+        {{ user.displayName }}
     </div>
 </template>
 
 <script>
-export default {};
+import { useUser } from "@/composables/useUser";
+
+export default {
+    setup() {
+        const { getUser } = useUser();
+        const { user } = getUser();
+
+        return { user };
+    },
+};
 </script>
 
 <style></style>
