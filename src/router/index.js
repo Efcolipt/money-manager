@@ -31,6 +31,18 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "Profile" */ "@/views/profile.vue"),
     },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: () =>
+            import(/* webpackChunkName: "Profile" */ "@/views/profile.vue"),
+    },
+    {
+        path: "/logout",
+        name: "Logout",
+        component: () =>
+            import(/* webpackChunkName: "Logout" */ "@/views/logout.vue"),
+    },
 ];
 
 const router = createRouter({
