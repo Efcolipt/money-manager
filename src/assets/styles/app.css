@@ -1,3 +1,14 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities{
+    .p-b-safe-4 {
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    }
+}
+
 body{
     @apply bg-dark-light;
 
@@ -115,7 +126,3 @@ i {
     content: "\e929";
     color: #363853;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

@@ -1,10 +1,17 @@
 <template>
-    <h1>Default Layout</h1>
+    <NavigationHeader />
     <slot />
+    <NavigationBottom />
 </template>
 
 <script>
-export default {};
-</script>
+import NavigationBottom from "@/components/NavigationBottom.vue";
+import NavigationHeader from "@/components/NavigationHeader.vue";
 
-<style></style>
+export default {
+    components: {
+        NavigationBottom,
+        NavigationHeader,
+    },
+};
+</script>
