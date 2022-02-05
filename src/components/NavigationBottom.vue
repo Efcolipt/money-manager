@@ -12,68 +12,47 @@
                 </li>
             </ul>
         </div>
+
+        <div
+            data-circle
+            class="top-0 absolute left-1/2 transform -translate-x-1/2"
+        ></div>
+        <div
+            data-circle-inset
+            class="flex items-center justify-center bg-primary text-white w-12 h-12 rounded-full cursor-pointer -top-6 absolute left-1/2 transform -translate-x-1/2"
+        >
+            <i class="t2ico text-white t2ico-plus"></i>
+        </div>
     </footer>
 </template>
 
 <script>
+import { NAV_ITEMS_BOTTOM } from "@/constants";
 import { reactive } from "vue";
 
 export default {
     setup() {
-        const navItems = reactive([
-            {
-                icon: "t2ico-category",
-                text: "Home",
-                name: "Home",
-            },
-            {
-                icon: "t2ico-chart",
-                text: "Report",
-                name: "Home",
-            },
-            {
-                icon: "t2ico-presentation",
-                text: "Budget",
-                name: "Home",
-            },
-            {
-                icon: "t2ico-profile",
-                text: "Profile",
-                name: "Profile",
-            },
-        ]);
+        const navItems = reactive(NAV_ITEMS_BOTTOM);
         return { navItems };
     },
 };
 </script>
 
 <style scoped lang="css">
-footer#footer::before,
-footer#footer::after {
-    @apply absolute;
-    left: 50%;
-    transform: translateX(-50%);
+footer#footer ul li:nth-child(2) {
+    margin-right: 10%;
 }
 
-footer#footer::before {
-    @apply bg-dark-light;
-    @apply absolute;
+footer#footer ul li:nth-child(3) {
+    margin-left: 10%;
+}
 
-    content: "";
+footer#footer > div[data-circle] {
+    @apply bg-dark-light;
+
     border-bottom-left-radius: 60px;
     border-bottom-right-radius: 60px;
     width: 60px;
     height: 30px;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-footer#footer::after {
-    @apply absolute -top-6 flex items-center justify-center text-white;
-    @apply w-12 h-12 bg-primary rounded-full cursor-pointer;
-
-    content: "\e921";
-    font-family: "t2ico";
 }
 </style>

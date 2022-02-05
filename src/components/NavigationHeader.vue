@@ -16,7 +16,9 @@
                 <div class="flex">
                     <ul>
                         <li>
-                            <i class="t2ico t2ico-notification"></i>
+                            <i
+                                class="t2ico t2ico-notification text-2xl cursor-pointer"
+                            ></i>
                         </li>
                     </ul>
                 </div>
