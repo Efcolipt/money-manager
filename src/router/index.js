@@ -47,6 +47,26 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "Logout" */ "@/views/logout.vue"),
     },
+    {
+        path: "/report",
+        name: "Report",
+        component: () =>
+            import(/* webpackChunkName: "Report" */ "@/views/report.vue"),
+    },
+    {
+        path: "/budget",
+        name: "Budget",
+        component: () =>
+            import(/* webpackChunkName: "Budget" */ "@/views/budget.vue"),
+    },
+    {
+        path: "/new-transaction",
+        name: "NewTransaction",
+        component: () =>
+            import(
+                /* webpackChunkName: "NewTransaction" */ "@/views/new-transaction.vue"
+            ),
+    },
 ];
 
 const router = createRouter({
