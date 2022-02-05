@@ -16,10 +16,10 @@
         <div
             data-circle
             class="top-0 absolute left-1/2 transform -translate-x-1/2"
-            @click="goToRoute"
         ></div>
         <div
             data-circle-inset
+            @click="goToRoute"
             class="flex items-center justify-center bg-primary text-white w-12 h-12 rounded-full cursor-pointer -top-6 absolute left-1/2 transform -translate-x-1/2"
         >
             <i class="t2ico t2ico-plus"></i>
