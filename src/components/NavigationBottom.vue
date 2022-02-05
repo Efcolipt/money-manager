@@ -16,12 +16,13 @@
         <div
             data-circle
             class="top-0 absolute left-1/2 transform -translate-x-1/2"
+            @click="goToRoute"
         ></div>
         <div
             data-circle-inset
             class="flex items-center justify-center bg-primary text-white w-12 h-12 rounded-full cursor-pointer -top-6 absolute left-1/2 transform -translate-x-1/2"
         >
-            <i class="t2ico text-white t2ico-plus"></i>
+            <i class="t2ico t2ico-plus"></i>
         </div>
     </footer>
 </template>
@@ -29,11 +30,17 @@
 <script>
 import { NAV_ITEMS_BOTTOM } from "@/constants";
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
     setup() {
         const navItems = reactive(NAV_ITEMS_BOTTOM);
-        return { navItems };
+        const router = useRouter();
+
+        function goToRoute() {
+            router.push({ name: "NewTransaction", params: {} });
+        }
+        return { navItems, goToRoute };
     },
 };
 </script>
