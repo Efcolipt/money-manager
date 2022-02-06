@@ -30,21 +30,7 @@
                     </label>
                 </div>
                 <div class="row">
-                    <button
-                        v-if="!isPending"
-                        type="submit"
-                        class="text-center py-3 w-full bg-primary text-white font-bold rounded-lg"
-                    >
-                        Sign In
-                    </button>
-                    <button
-                        v-else
-                        type="button"
-                        class="text-center py-3 w-full bg-gray-800 text-white font-bold rounded-lg cursor-not-allowed"
-                        disabled
-                    >
-                        Loading...
-                    </button>
+                    <BaseButton :isPending="isPending"> Sign in </BaseButton>
                 </div>
             </form>
 
@@ -71,14 +57,15 @@
 import { useSignIn } from "@/composables/useSignIn";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import BaseButton from "@/components/BaseButton.vue";
 
 export default {
     setup() {
-        const router = useRouter();
-
         const email = ref("");
         const password = ref("");
+
         const { error, isPending, signin } = useSignIn();
+        const router = useRouter();
 
         async function onSubmit() {
             await signin(email.value, password.value);
@@ -93,5 +80,6 @@ export default {
             isPending,
         };
     },
+    components: { BaseButton },
 };
 </script>

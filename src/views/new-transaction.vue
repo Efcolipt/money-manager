@@ -140,6 +140,7 @@
                                         id="location"
                                         class="text-dark w-full outline-none"
                                         placeholder="location"
+                                        v-model="location"
                                     />
                                 </div>
                             </label>
@@ -161,6 +162,7 @@
                                         id="withPerson"
                                         class="text-dark w-full outline-none"
                                         placeholder="With person"
+                                        v-model="person"
                                     />
                                 </div>
                             </label>
@@ -202,33 +204,46 @@
             <div class="text-red my-3" v-if="errorFile">{{ errorFile }}</div>
         </div>
 
-        <button type="submit">asd</button>
-        <div class="text-red my-3" v-if="errorTransaction">
+        <BaseButton :isPending="isPending" class="mt-8">
+            Send transaction
+        </BaseButton>
+        <div class="text-red my-3 text-center" v-if="errorTransaction">
             {{ errorTransaction }}
+        </div>
+        <div class="text-green my-3 text-center" v-if="successTransaction">
+            {{ successTransaction }}
         </div>
     </form>
 </template>
 
 <script>
 import useCollection from "@/composables/useCollection";
+import useStorage from "@/composables/useStorage";
 import { useUser } from "@/composables/useUser";
 import { ref } from "vue";
+import BaseButton from "@/components/BaseButton.vue";
 
 export default {
     setup() {
         const { getUser } = useUser();
         const { error: errorTransaction, addRecord } =
             useCollection("transactions");
+        const { uploadFile, url } = useStorage("transactions");
 
         const isMoreDetails = ref(false);
         const total = ref("");
         const category = ref("");
         const note = ref("");
+        const location = ref("");
+        const person = ref("");
         const time = ref(new Date());
         const file = ref(null);
         const errorFile = ref(null);
+        const successTransaction = ref(null);
+        const isPending = ref(false);
 
         function onChangeFile(e) {
+            errorFile.value = null;
             const selected = e.target.files[0];
             const types = ["image/png", "image/jpg", "image/jpeg"];
 
@@ -241,8 +256,14 @@ export default {
                 console.log(errorFile.value);
             }
         }
-
         async function onSubmit() {
+            isPending.value = true;
+            errorFile.value = null;
+            errorTransaction.value = null;
+            successTransaction.value = null;
+
+            if (file.value) await uploadFile(file.value);
+
             const { user } = getUser();
 
             const transaction = {
@@ -250,12 +271,17 @@ export default {
                 category: category.value,
                 note: note.value,
                 time: time.value,
+                location: location.value,
+                person: person.value,
                 userId: user.value.uid,
+                thumbnail: url.value,
             };
 
             await addRecord(transaction);
-        }
 
+            successTransaction.value = "Transaction success";
+            isPending.value = false;
+        }
         return {
             onSubmit,
             isMoreDetails,
@@ -266,7 +292,12 @@ export default {
             errorTransaction,
             onChangeFile,
             errorFile,
+            successTransaction,
+            location,
+            person,
+            isPending,
         };
     },
+    components: { BaseButton },
 };
 </script>

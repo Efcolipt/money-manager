@@ -42,21 +42,7 @@
                     </label>
                 </div>
                 <div class="row">
-                    <button
-                        v-if="!isPending"
-                        type="submit"
-                        class="text-center py-3 w-full bg-primary text-white font-bold rounded-lg"
-                    >
-                        Sign Up
-                    </button>
-                    <button
-                        v-else
-                        type="button"
-                        class="text-center py-3 w-full bg-gray-800 text-white font-bold rounded-lg cursor-not-allowed"
-                        disabled
-                    >
-                        Loading...
-                    </button>
+                    <BaseButton :isPending="isPending"> Sign Up </BaseButton>
                 </div>
             </form>
 
@@ -83,6 +69,7 @@
 import { useSignUp } from "@/composables/useSignUp";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import BaseButton from "@/components/BaseButton.vue";
 
 export default {
     setup() {
@@ -107,6 +94,7 @@ export default {
             isPending,
         };
     },
+    components: { BaseButton },
 };
 </script>
 

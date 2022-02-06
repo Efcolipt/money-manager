@@ -1,6 +1,6 @@
-import { projectStorage } from "@/config/firebase";
 import { ref } from "vue";
-import { useUser } from "@/useUser";
+import { projectStorage } from "@/config/firebase";
+import { useUser } from "@/composables/useUser";
 
 const { getUser } = useUser();
 const { user } = getUser();
@@ -13,7 +13,7 @@ const useStorage = (name) => {
     async function uploadFile(file) {
         filePath.value = `${name}/${user.value.uid}/${file.name}`;
 
-        const fileRef = projectStorage.ref(filePath);
+        const fileRef = projectStorage.ref(filePath.value);
 
         try {
             const res = await fileRef.put(file);

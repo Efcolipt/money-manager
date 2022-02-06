@@ -1,8 +1,5 @@
 <template>
-    <div class="home">sheesh</div>
-    <div class="mt-6" v-if="user">
-        {{ user.displayName }}
-    </div>
+    <div class="mt-6" v-if="user"></div>
 </template>
 
 <script>

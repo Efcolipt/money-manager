@@ -6,6 +6,7 @@ const requireAuth = (to, from, next) => {
     const user = projectAuth.currentUser;
 
     if (!user) next({ name: "Login", params: {} });
+    // else if (user && to.name == 'Login') next({ name: "Profile", params: {} });
     else next();
 };
 
