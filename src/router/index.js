@@ -36,6 +36,7 @@ const routes = [
             text: "Hey, Sky Albert",
             isShowFooter: true,
         },
+        beforeEnter: requireAuth,
         component: () =>
             import(/* webpackChunkName: "Home" */ "@/views/index.vue"),
     },
@@ -65,6 +66,7 @@ const routes = [
             text: "Report",
             isShowFooter: true,
         },
+        beforeEnter: requireAuth,
         component: () =>
             import(/* webpackChunkName: "Report" */ "@/views/report.vue"),
     },
@@ -76,6 +78,7 @@ const routes = [
             text: "Budget",
             isShowFooter: true,
         },
+        beforeEnter: requireAuth,
         component: () =>
             import(/* webpackChunkName: "Budget" */ "@/views/budget.vue"),
     },
@@ -87,6 +90,7 @@ const routes = [
             text: "New Transaction",
             isShowFooter: false,
         },
+        beforeEnter: requireAuth,
         component: () =>
             import(
                 /* webpackChunkName: "NewTransaction" */ "@/views/new-transaction.vue"

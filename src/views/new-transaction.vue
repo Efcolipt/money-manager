@@ -20,10 +20,11 @@
                                     >Total</span
                                 >
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="total"
                                     class="text-4xl text-dark w-full outline-none mt-1"
                                     placeholder="0"
+                                    v-model="total"
                                 />
                             </div>
                         </label>
@@ -43,6 +44,7 @@
                                     id="category"
                                     class="text-xl text-dark w-full outline-none"
                                     placeholder="Select a category"
+                                    v-model="category"
                                 />
                             </div>
                         </label>
@@ -64,12 +66,13 @@
                                     id="note"
                                     class="text-dark w-full outline-none"
                                     placeholder="Note"
+                                    v-model="note"
                                 />
                             </div>
                         </label>
                     </div>
                     <div class="row">
-                        <label for="createdAt" class="flex items-center">
+                        <label for="time" class="flex items-center">
                             <div class="flex-none w-10 mr-4">
                                 <span
                                     class="flex items-center justify-end text-dark"
@@ -81,7 +84,7 @@
                             </div>
                             <div class="flex-1 py-2 border-b border-gray-100">
                                 <div class="text-dark w-full">
-                                    Sun, 29 Dec 2021
+                                    {{ new Date() }}
                                 </div>
                             </div>
                         </label>
@@ -173,13 +176,11 @@
                 <div class="container mx-auto px-8">
                     <div class="row">
                         <label
-                            for="camera"
+                            for="file"
                             class="flex items-center text-primary"
                         >
                             <div class="flex-none w-10 mr-4">
-                                <span
-                                    class="flex items-center justify-end text-dark"
-                                >
+                                <span class="flex items-center justify-end">
                                     <i
                                         class="t2ico t2ico-camera text-2xl text-primary"
                                     ></i>
@@ -187,25 +188,85 @@
                             </div>
                             <div class="flex-1 py-2">
                                 <div class="w-ful">Upload Photos</div>
+                                <input
+                                    type="file"
+                                    id="file"
+                                    class="w-0 h-0 overflow-hidden absolute"
+                                    @change="onChangeFile"
+                                />
                             </div>
                         </label>
                     </div>
                 </div>
             </div>
+            <div class="text-red my-3" v-if="errorFile">{{ errorFile }}</div>
+        </div>
+
+        <button type="submit">asd</button>
+        <div class="text-red my-3" v-if="errorTransaction">
+            {{ errorTransaction }}
         </div>
     </form>
 </template>
 
 <script>
+import useCollection from "@/composables/useCollection";
+import { useUser } from "@/composables/useUser";
 import { ref } from "vue";
 
 export default {
     setup() {
+        const { getUser } = useUser();
+        const { error: errorTransaction, addRecord } =
+            useCollection("transactions");
+
         const isMoreDetails = ref(false);
+        const total = ref("");
+        const category = ref("");
+        const note = ref("");
+        const time = ref(new Date());
+        const file = ref(null);
+        const errorFile = ref(null);
 
-        function onSubmit() {}
+        function onChangeFile(e) {
+            const selected = e.target.files[0];
+            const types = ["image/png", "image/jpg", "image/jpeg"];
 
-        return { onSubmit, isMoreDetails };
+            if (selected && types.includes(selected.type)) {
+                file.value = selected;
+            } else {
+                file.value = null;
+                errorFile.value =
+                    "Please select a file type: " + types.join(", ");
+                console.log(errorFile.value);
+            }
+        }
+
+        async function onSubmit() {
+            const { user } = getUser();
+
+            const transaction = {
+                total: parseInt(total.value),
+                category: category.value,
+                note: note.value,
+                time: time.value,
+                userId: user.value.uid,
+            };
+
+            await addRecord(transaction);
+        }
+
+        return {
+            onSubmit,
+            isMoreDetails,
+            total,
+            category,
+            note,
+            time,
+            errorTransaction,
+            onChangeFile,
+            errorFile,
+        };
     },
 };
 </script>
